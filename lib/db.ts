@@ -1,32 +1,84 @@
-import { User, Expense } from './types';
+import dbConnect from './mongoose';
+import User from './models/User';
+import Expense from './models/Expense';
+import { User as UserType, Expense as ExpenseType } from './types';
 
-// In-memory database (replace with real DB in production)
-export const users: User[] = [];
-export const expenses: Expense[] = [];
-
-export const findUserByEmail = (email: string): User | undefined => {
-  return users.find(u => u.email === email);
+// User operations
+export const findUserByEmail = async (email: string): Promise<UserType | null> => {
+  await dbConnect();
+  const user = await User.findOne({ email }).lean();
+  
+  if (!user) return null;
+  
+  return {
+    id: user._id.toString(),
+    email: user.email,
+    name: user.name,
+    password: user.password,
+  };
 };
 
-export const createUser = (user: User): User => {
-  users.push(user);
-  return user;
+export const createUser = async (userData: UserType): Promise<UserType> => {
+  await dbConnect();
+  
+  const user = await User.create({
+    email: userData.email,
+    name: userData.name,
+    password: userData.password,
+  });
+
+  return {
+    id: user._id.toString(),
+    email: user.email,
+    name: user.name,
+    password: user.password,
+  };
 };
 
-export const getExpensesByUserId = (userId: string): Expense[] => {
-  return expenses.filter(e => e.userId === userId);
+// Expense operations
+export const getExpensesByUserId = async (userId: string): Promise<ExpenseType[]> => {
+  await dbConnect();
+  
+  const expenses = await Expense.find({ userId })
+    .sort({ date: -1, createdAt: -1 })
+    .lean();
+
+  return expenses.map(exp => ({
+    id: exp._id.toString(),
+    userId: exp.userId,
+    date: exp.date,
+    category: exp.category,
+    amount: exp.amount,
+    note: exp.note,
+    createdAt: exp.createdAt.toISOString(),
+  }));
 };
 
-export const createExpense = (expense: Expense): Expense => {
-  expenses.push(expense);
-  return expense;
+export const createExpense = async (expenseData: ExpenseType): Promise<ExpenseType> => {
+  await dbConnect();
+  
+  const expense = await Expense.create({
+    userId: expenseData.userId,
+    date: expenseData.date,
+    category: expenseData.category,
+    amount: expenseData.amount,
+    note: expenseData.note,
+  });
+
+  return {
+    id: expense._id.toString(),
+    userId: expense.userId,
+    date: expense.date,
+    category: expense.category,
+    amount: expense.amount,
+    note: expense.note,
+    createdAt: expense.createdAt.toISOString(),
+  };
 };
 
-export const deleteExpense = (id: string, userId: string): boolean => {
-  const index = expenses.findIndex(e => e.id === id && e.userId === userId);
-  if (index > -1) {
-    expenses.splice(index, 1);
-    return true;
-  }
-  return false;
+export const deleteExpense = async (id: string, userId: string): Promise<boolean> => {
+  await dbConnect();
+  
+  const result = await Expense.deleteOne({ _id: id, userId });
+  return result.deletedCount === 1;
 };
