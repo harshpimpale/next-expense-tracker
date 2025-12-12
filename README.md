@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💸 Expense Tracker
 
-## Getting Started
+>A modern, full-stack expense tracking web app built with Next.js, TypeScript, MongoDB, and Tailwind CSS.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **User Authentication**: Secure signup, login, and logout flows
+- **Expense Management**: Add, view, filter, and delete expenses
+- **Analytics Dashboard**: Visualize spending by category and over time
+- **Filtering**: Filter expenses by date range and category
+- **Responsive UI**: Beautiful, mobile-friendly design with Tailwind CSS
+- **Persistent Storage**: Data stored securely in MongoDB
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🖥️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Next.js 14](https://nextjs.org/) (App Router)
+- [React 18](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [MongoDB & Mongoose](https://mongoosejs.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs) for password hashing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📸 Screenshots
 
-## Learn More
+<p align="center">
+  <img src="public/screenshot-dashboard.png" alt="Dashboard Screenshot" width="600"/>
+</p>
 
-To learn more about Next.js, take a look at the following resources:
+## 🏁 Getting Started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository**
+	```bash
+	git clone https://github.com/your-username/expense-tracker.git
+	cd expense-tracker
+	```
+2. **Install dependencies**
+	```bash
+	npm install
+	# or
+	yarn install
+	```
+3. **Set up environment variables**
+	- Create a `.env.local` file in the root directory:
+	  ```env
+	  MONGODB_URI=your_mongodb_connection_string
+	  JWT_SECRET=your_jwt_secret
+	  ```
+4. **Run the development server**
+	```bash
+	npm run dev
+	# or
+	yarn dev
+	```
+5. **Open [http://localhost:3000](http://localhost:3000) in your browser**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🗂️ Project Structure
 
-## Deploy on Vercel
+- `app/` — Next.js app directory (routes, pages, API)
+- `components/` — Reusable React components (Navbar, ExpenseForm, Analytics, etc.)
+- `lib/` — Database, models, and utility functions
+- `public/` — Static assets
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛡️ Security
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Passwords are hashed using bcryptjs
+- JWT-based authentication for API routes
+
+## 📊 Analytics
+
+- Visual breakdown of expenses by category
+- Total spending summary
+
+## 🧑‍💻 Contributing
+
+Contributions are welcome! Please open issues or submit pull requests for improvements.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+<p align="center">
+  Built with ❤️ using Next.js & MongoDB
+</p>
